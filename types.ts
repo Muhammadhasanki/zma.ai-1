@@ -14,7 +14,7 @@ export interface GeneratedImage {
   base64: string;
   mimeType: string;
   prompt: string;
-  type: 'generate' | 'edit' | 'logo' | 'filter' | 'face-swap' | 'retouch' | 'restore' | 'variation' | 'background-removal' | 'passport-photo' | 'enhance' | 'brand-asset' | 'portrait-enhance';
+  type: 'generate' | 'edit' | 'logo' | 'filter' | 'face-swap' | 'retouch' | 'restore' | 'variation' | 'background-removal' | 'passport-photo' | 'enhance' | 'brand-asset' ;
   createdAt: string;
   parentId?: string; // Link to the original image for variations
   settings?: GenerationSettings;

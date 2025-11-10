@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { GoogleGenAI, Modality, Type } from '@google/genai';
 import { GeneratedImage } from '../types';
@@ -10,7 +11,7 @@ interface ImageStudioProps {
     galleryImages: GeneratedImage[];
 }
 
-type Mode = 'generate' | 'edit' | 'face-swap' | 'restore' | 'extract-text' | 'analyze' | 'inpaint' | 'adjust' | 'background-removal' | 'replicate' | 'upscale' | 'converter' | 'passport-photo' | 'portrait-enhance' | 'retouch';
+type Mode = 'generate' | 'edit' | 'face-swap' | 'restore' | 'extract-text' | 'analyze' | 'inpaint' | 'adjust' | 'background-removal' | 'replicate' | 'upscale' | 'converter' | 'passport-photo' | 'retouch';
 
 interface UploadedFile {
     file: File;
@@ -687,7 +688,7 @@ Key requirements:
         if (!part || !part.inlineData) throw new Error("AI did not return an image.");
         processNewImage({
             id: new Date().toISOString(),
-            src: `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`,
+            src: `data:${part.inlineData.mimeType};base664,${part.inlineData.data}`,
             originalSrc: 'src' in imageToUpscale ? imageToUpscale.src : imageToUpscale.url,
             base64: part.inlineData.data, mimeType: part.inlineData.mimeType,
             prompt: `Upscaled to ${upscaleFactor}`, type: 'edit', createdAt: new Date().toLocaleString(),
@@ -715,7 +716,6 @@ Key requirements:
     const handleEdit = () => singleImageAction(prompt, 'edit', activeImage);
     const handleAdjust = () => singleImageAction(`Apply the following adjustments to the image: ${Object.entries(adjustments).filter(([, val]) => val !== 0).map(([key, val]) => `${val > 0 ? 'increase' : 'decrease'} ${key} by ${Math.abs(val)}%`).join(', ')}. Keep the result natural and high quality.`, 'edit', activeImage);
     const handleBackgroundRemoval = () => singleImageAction("Remove the background from this image. The final output must be a high-quality PNG file with a completely transparent background (RGBA, with alpha channel at zero). There should be no background color, patterns, or semi-transparent noise. The edges of the subject must be clean, sharp, and precisely masked.", 'background-removal', activeImage);
-    const handlePortraitEnhance = () => singleImageAction("Perform a high-fidelity enhancement on this image. Improve its sharpness, clarity, and dynamic range while meticulously preserving natural color tones and textures, especially for skin. The goal is a realistic, professional-grade result. Remove any blurriness, compression artifacts, or noise without over-processing or introducing artificial textures. Ensure the lighting and contrast are balanced and natural, avoiding overexposure. Do not alter the original content or composition.", 'portrait-enhance', activeImage);
     const handlePassportPhoto = () => {
         const { background, attire, country, hairstyle, facialHair } = passportSettings;
         const size = passportSizes[country];
@@ -801,7 +801,6 @@ Key requirements:
     const modeConfig = {
         generate: { title: 'Generate Image', description: 'Describe your vision and generate a unique image from scratch.', icon: VariationsIcon },
         edit: { title: 'AI Edit Image', description: 'Upload an image and describe your desired changes.', icon: WandIcon },
-        'portrait-enhance': { title: 'AI Portrait Enhancer', description: 'Retouch, deblur, and enhance face details for a perfect portrait.', icon: SparklesIcon },
         retouch: { title: 'Magic Eraser', description: 'Erase unwanted objects, spots, or blemishes from your image.', icon: RetouchIcon },
         replicate: { title: 'Replicate Style', description: 'Replace text or objects in an image while perfectly matching the original style.', icon: EyeDropperIcon },
         'background-removal': { title: 'Background Removal', description: 'Upload an image to automatically remove the background.', icon: ScissorsIcon },
@@ -841,7 +840,6 @@ Key requirements:
             case 'replicate': return handleReplicate();
             case 'upscale': return handleUpscaleActiveImage();
             case 'passport-photo': return handlePassportPhoto();
-            case 'portrait-enhance': return handlePortraitEnhance();
         }
     };
 
@@ -852,7 +850,7 @@ Key requirements:
         (mode === 'inpaint' && (!prompt || !activeImage || !maskImage)) ||
         (mode === 'retouch' && (!activeImage || !maskImage)) ||
         (mode === 'face-swap' && (!activeImage || !faceImage)) ||
-        (['restore', 'extract-text', 'analyze', 'background-removal', 'upscale', 'passport-photo', 'portrait-enhance'].includes(mode) && !activeImage) ||
+        (['restore', 'extract-text', 'analyze', 'background-removal', 'upscale', 'passport-photo'].includes(mode) && !activeImage) ||
         (mode === 'replicate' && (!activeImage || !prompt || !textToReplace));
 
     const isImageSaved = generatedImage ? galleryImages.some(img => img.id === generatedImage.id) : false;
@@ -922,7 +920,7 @@ Key requirements:
                         </div>
                     )}
                     
-                    {['generate', 'edit', 'restore', 'extract-text', 'analyze', 'adjust', 'background-removal', 'replicate', 'upscale', 'converter', 'passport-photo', 'portrait-enhance'].includes(mode) && <ImageUploader onFilesUploaded={handleNewFiles('base')} imageUrl={activeImage?.url || null} title="Base Image" multiple />}
+                    {['generate', 'edit', 'restore', 'extract-text', 'analyze', 'adjust', 'background-removal', 'replicate', 'upscale', 'converter', 'passport-photo'].includes(mode) && <ImageUploader onFilesUploaded={handleNewFiles('base')} imageUrl={activeImage?.url || null} title="Base Image" multiple />}
                     {mode === 'face-swap' && <div className="space-y-4"><ImageUploader onFilesUploaded={handleNewFiles('face')} imageUrl={faceImage?.url || null} title="Source Face" /><ImageUploader onFilesUploaded={handleNewFiles('base')} imageUrl={activeImage?.url || null} title="Target Image" multiple /></div>}
                     
                     {mode === 'passport-photo' && activeImage && (
