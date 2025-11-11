@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { GeneratedImage } from '../types';
 import { GoogleGenAI, Modality } from '@google/genai';
@@ -70,7 +69,7 @@ const ImageDetailModal: React.FC<{
         setIsLoading(true);
         setError('');
         try {
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
             const result = await ai.models.generateContent({
                 model: 'gemini-2.5-flash-image',
                 contents: {

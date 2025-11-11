@@ -29,7 +29,7 @@ export const Chatbot = ({ currentView }: { currentView: View }) => {
             // If view has changed, or chat is not initialized
             if (currentView !== lastViewRef.current || !chatRef.current) {
                 try {
-                    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+                    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
                     chatRef.current = ai.chats.create({
                         model: 'gemini-2.5-flash',
                         config: {
