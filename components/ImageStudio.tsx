@@ -1,3 +1,5 @@
+
+
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { GoogleGenAI, Modality, Type } from '@google/genai';
 import { GeneratedImage } from '../types';
@@ -489,7 +491,8 @@ export const ImageStudio: React.FC<ImageStudioProps> = ({ addImageToGallery, gal
         setIsLoading(true);
         setError('');
         try {
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+            // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
             const result = await ai.models.generateContent({
                 model: 'gemini-2.5-flash',
                 contents: `Enhance this image generation prompt to be more descriptive, vivid, and artistic. Add details about lighting, style, and composition. Original prompt: "${prompt}"`,
@@ -545,7 +548,8 @@ export const ImageStudio: React.FC<ImageStudioProps> = ({ addImageToGallery, gal
         if (!prompt && !activeImage) { setError('Please enter a prompt or upload a base image.'); return; }
         const realismDescription = settings.realismLevel < 30 ? 'artistic, stylized, abstract' : settings.realismLevel < 70 ? 'semi-realistic, detailed, high quality' : 'photorealistic, hyper-detailed, 8k';
         const finalPrompt = `${prompt}, ${realismDescription}`;
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+        // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
 
         if (activeImage && mode === 'generate') {
             const result = await ai.models.generateContent({
@@ -585,7 +589,8 @@ export const ImageStudio: React.FC<ImageStudioProps> = ({ addImageToGallery, gal
 
     const singleImageAction = (prompt: string, type: GeneratedImage['type'], image: UploadedFile | null) => runAI(async () => {
         if (!image) { setError('Please upload the required image.'); return; }
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+        // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
         const result = await ai.models.generateContent({
             model: 'gemini-2.5-flash-image',
             contents: { parts: [ { inlineData: { data: image.base64, mimeType: image.mimeType } }, { text: prompt } ] },
@@ -603,7 +608,8 @@ export const ImageStudio: React.FC<ImageStudioProps> = ({ addImageToGallery, gal
     
     const multiImageAction = (prompt: string, type: GeneratedImage['type'], ...images: (UploadedFile|null)[]) => runAI(async () => {
         if (images.some(img => !img)) { setError('Please upload all required images.'); return; }
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+        // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
         const parts = [...images.map(img => ({ inlineData: { data: img!.base64, mimeType: img!.mimeType } })), { text: prompt }];
         const result = await ai.models.generateContent({
             model: 'gemini-2.5-flash-image',
@@ -623,7 +629,8 @@ export const ImageStudio: React.FC<ImageStudioProps> = ({ addImageToGallery, gal
     const handleGenerateVariation = () => runAI(async () => {
         if (!generatedImage) { setError('No image to create variations from.'); return; }
         const variationPrompt = `Generate a variation of this image. The original prompt was: "${generatedImage.prompt}"`;
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+        // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
         const result = await ai.models.generateContent({
             model: 'gemini-2.5-flash-image',
             contents: { parts: [ { inlineData: { data: generatedImage.base64, mimeType: generatedImage.mimeType } }, { text: variationPrompt } ] },
@@ -646,7 +653,8 @@ export const ImageStudio: React.FC<ImageStudioProps> = ({ addImageToGallery, gal
     
     const handleExtractText = () => runAI(async () => {
         if (!activeImage) { setError('Please upload an image.'); return; }
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+        // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
         const result = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
             contents: { parts: [ { text: "Extract all text from this image accurately, maintaining original formatting." }, { inlineData: { data: activeImage.base64, mimeType: activeImage.mimeType } } ] },
@@ -656,7 +664,8 @@ export const ImageStudio: React.FC<ImageStudioProps> = ({ addImageToGallery, gal
     
     const handleAnalyze = () => runAI(async () => {
         if (!activeImage) { setError('Please upload an image.'); return; }
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+        // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
         const result = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
             contents: { parts: [ { text: "Describe this image in detail for an AI image generation prompt. Be vivid about subject, setting, lighting, colors, style, and composition." }, { inlineData: { data: activeImage.base64, mimeType: activeImage.mimeType } } ] },
@@ -678,7 +687,8 @@ Key requirements:
 3.  **Artifact Correction:** If minor compression artifacts or noise exist, correct them seamlessly during upscaling.
 4.  **No AI Hallucinations:** The upscaled image must be free of any AI-generated artifacts, strange patterns, or inconsistencies.
 5.  **Lighting Consistency:** Ensure lighting and contrast are consistent with the source image.`;
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+        // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
         const result = await ai.models.generateContent({
             model: 'gemini-2.5-flash-image',
             contents: { parts: [ { inlineData: { data: imageToUpscale.base64, mimeType: imageToUpscale.mimeType } }, { text: upscalePrompt } ] },
@@ -808,7 +818,7 @@ Key requirements:
         'face-swap': { title: 'AI Face Swap', description: 'Upload a source face and a target image for a realistic swap.', icon: SwapIcon },
         restore: { title: 'Restore Old Photo', description: 'Automatically repair and enhance old photographs.', icon: RestoreIcon },
         'passport-photo': { title: 'Passport Photo Generator', description: 'Create professional, compliant passport photos from your images.', icon: AdjustmentsIcon },
-        'extract-text': { title: 'Extract Text (OCR)', description: 'Pull text from any image.', icon: TextScanIcon },
+        'extract-text': { title: 'Extract Text (OCR)', description: 'Pull text from any image using Optical Character Recognition (OCR).', icon: TextScanIcon },
         analyze: { title: 'Analyze Image', description: 'Generate a detailed prompt from an existing image.', icon: AnalyzeIcon },
         upscale: { title: 'AI Super Enlargement', description: 'Increase the resolution of your images while enhancing details.', icon: UpscaleIcon },
         converter: { title: 'Image Converter', description: 'Convert images between formats like JPG, PNG, and WEBP.', icon: SwapIcon },
@@ -930,6 +940,7 @@ Key requirements:
                                     {Object.entries(passportSizes).map(([country, size]) => (
                                         <option key={country} value={country}>{country} ({size})</option>
                                     ))}
+                                沙拉德
                                 </select>
                              </div>
                              <div>

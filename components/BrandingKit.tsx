@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { GoogleGenAI, Type, Modality } from '@google/genai';
 import { GeneratedImage, BrandingElements } from '../types';
@@ -34,7 +35,8 @@ export const BrandingKit: React.FC<BrandingKitProps> = ({ addImageToGallery, gal
         setBrandImagery([]);
 
         try {
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+            // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
             
             setLoadingMessage('Crafting brand identity...');
             const textPrompt = `Generate a comprehensive branding kit for a company named "${brandName}". 

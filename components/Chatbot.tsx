@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI, Chat, GenerateContentResponse } from '@google/genai';
+import { GoogleGenAI, Chat } from '@google/genai';
 import { ChatMessage, View } from '../types';
 import { ChatBubbleIcon, XMarkIcon, PaperAirplaneIcon, SparklesIcon } from './icons';
 
@@ -21,7 +21,7 @@ export const Chatbot = ({ currentView }: { currentView: View }) => {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const chatRef = useRef<Chat | null>(null);
-    const lastViewRef = useRef<View | null>(null);
+    const lastViewRef = useRef<View | null>(currentView); // Initialize with currentView to avoid ReferenceError
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export const Chatbot = ({ currentView }: { currentView: View }) => {
             // If view has changed, or chat is not initialized
             if (currentView !== lastViewRef.current || !chatRef.current) {
                 try {
-                    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string, baseUrl: '/api/gemini/v1beta' });
+                    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
                     chatRef.current = ai.chats.create({
                         model: 'gemini-2.5-flash',
                         config: {
