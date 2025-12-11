@@ -1,9 +1,9 @@
 
-
 import React, { useState, useRef } from 'react';
 import { GeneratedImage } from '../types';
 import { GoogleGenAI, Modality } from '@google/genai';
-import { SparklesIcon, XMarkIcon, PaperAirplaneIcon, RetouchIcon, FilterIcon, RealismIcon, LogoIcon } from './icons';
+import { SparklesIcon, XMarkIcon, PaperAirplaneIcon, RetouchIcon, FilterIcon, RealismIcon, LogoIcon, SpeakerWaveIcon } from './icons';
+import { speakText } from '../utils/tts';
 
 interface GalleryProps {
     images: GeneratedImage[];
@@ -14,6 +14,7 @@ interface GalleryProps {
 const ImageComparator: React.FC<{ before: string; after: string }> = ({ before, after }) => {
     const [sliderPos, setSliderPos] = useState(50);
     const containerRef = useRef<HTMLDivElement>(null);
+    const isDragging = useRef(false);
 
     const handleMove = (clientX: number) => {
         if (!containerRef.current) return;
@@ -24,24 +25,32 @@ const ImageComparator: React.FC<{ before: string; after: string }> = ({ before, 
     };
 
     const handleMouseDown = (e: React.MouseEvent) => {
-        const onMouseMove = (moveEvent: MouseEvent) => handleMove(moveEvent.clientX);
-        const onMouseUp = () => {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-        };
+        isDragging.current = true;
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
     };
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+        if (isDragging.current) {
+            handleMove(moveEvent.clientX);
+        }
+    };
+
+    const onMouseUp = () => {
+        isDragging.current = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    };
     
     return (
-        <div ref={containerRef} className="relative w-full h-full overflow-hidden rounded-2xl select-none group checkerboard-bg" style={{ cursor: 'ew-resize' }} onMouseDown={(e) => handleMove(e.clientX)} onMouseMove={(e) => e.buttons === 1 && handleMove(e.clientX)}>
+        <div ref={containerRef} className="relative w-full h-full overflow-hidden rounded-2xl select-none group checkerboard-bg" style={{ cursor: isDragging.current ? 'grabbing' : 'ew-resize' }} onMouseDown={handleMouseDown}>
             <img src={after} alt="After" className="absolute inset-0 w-full h-full object-contain pointer-events-none" />
             <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}>
                 <img src={before} alt="Before" className="absolute inset-0 w-full h-full object-contain" />
             </div>
-            <div className="absolute top-0 bottom-0 bg-white/70 w-1 cursor-ew-resize backdrop-blur-sm" style={{ left: `calc(${sliderPos}% - 2px)` }} onMouseDown={handleMouseDown}>
+            <div className="absolute top-0 bottom-0 bg-white/70 w-1 cursor-ew-resize backdrop-blur-sm" style={{ left: `calc(${sliderPos}% - 2px)` }} >
                 <div className="bg-white/80 backdrop-blur-sm rounded-full h-10 w-10 absolute top-1/2 -translate-y-1/2 -left-1/2 -translate-x-1/2 flex items-center justify-center shadow-md border border-white/20">
-                    <svg className="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 19l-7-7 7-7m2 14l7-7-7-7" /></svg>
+                    <svg className="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h8m-4-4v8" transform="rotate(90 12 12)" /></svg>
                 </div>
             </div>
         </div>
@@ -84,7 +93,9 @@ const ImageDetailModal: React.FC<{
                 config: { responseModalities: [Modality.IMAGE] }
             });
 
-            const newPart = result.candidates[0].content.parts.find(p => p.inlineData);
+            // Fix: Safely access response structure using optional chaining
+            const newPart = result.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+            
             if (newPart && newPart.inlineData) {
                 const newImage: GeneratedImage = {
                     id: new Date().toISOString(),
@@ -129,6 +140,11 @@ const ImageDetailModal: React.FC<{
         const prompt = `Apply a highly realistic and detailed skin texture to the person in this image. Add subtle imperfections like pores, fine lines, and natural variations in tone to enhance photorealism. Ensure the result looks natural and not overly processed.`;
         await applyAIEdit(prompt, 'edit', currentImage);
     }
+
+    const handleSpeakImageDetails = () => {
+        const details = `Prompt: "${currentImage.prompt}". Type: ${currentImage.type}. Created on: ${currentImage.createdAt}.`;
+        speakText(details);
+    };
     
     return (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in" onClick={onClose}>
@@ -148,7 +164,12 @@ const ImageDetailModal: React.FC<{
                 <div className="w-full md:w-1/3 p-6 flex flex-col overflow-y-auto">
                     <div className="flex-1 space-y-6">
                          <div>
-                            <h3 className="text-xl font-bold text-white bg-clip-text text-transparent bg-[var(--gradient-text)]">Image Details</h3>
+                            <div className="flex items-center gap-2 mb-2">
+                                <h3 className="text-xl font-bold text-white bg-clip-text text-transparent bg-[var(--gradient-text)]">Image Details</h3>
+                                <button onClick={handleSpeakImageDetails} className="p-1.5 rounded-full hover:bg-[var(--border-primary)] text-gray-400" aria-label="Speak image details">
+                                    <SpeakerWaveIcon className="w-5 h-5" />
+                                </button>
+                            </div>
                             <p className="text-sm text-[var(--text-secondary)] mt-2"><strong>Prompt:</strong> {currentImage.prompt}</p>
                             <p className="text-sm text-[var(--text-secondary)]"><strong>Type:</strong> <span className="capitalize">{currentImage.type}</span></p>
                             <p className="text-sm text-[var(--text-secondary)]"><strong>Created:</strong> {currentImage.createdAt}</p>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 // Shared definitions for gradients and filters to be used across icons
@@ -107,6 +108,12 @@ export const RealismIcon = ({ className }: { className?: string }) => (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><IconDefs /><g filter="url(#drop-shadow)"><path fill="url(#glass-gradient)" stroke="url(#accent-gradient)" strokeLinecap="round" strokeLinejoin="round" d="M6.75 21a2.25 2.25 0 0 0 2.25-2.25V15M6.75 21a2.25 2.25 0 0 1-2.25-2.25V15M17.25 21a2.25 2.25 0 0 0 2.25-2.25V15m0 0a2.25 2.25 0 0 0-2.25-2.25H15M6.75 15a2.25 2.25 0 0 0-2.25-2.25H3m14.25 0a2.25 2.25 0 0 1 2.25 2.25m0 0a2.25 2.25 0 0 0-2.25-2.25M6.75 15a2.25 2.25 0 0 1 2.25 2.25m11.25-6.75a2.25 2.25 0 0 0-2.25-2.25H15a2.25 2.25 0 0 0-2.25 2.25m-7.5 0a2.25 2.25 0 0 0-2.25-2.25H3a2.25 2.25 0 0 0-2.25 2.25m11.25 0a2.25 2.25 0 0 1 2.25 2.25m-3.75 0a2.25 2.25 0 0 0-2.25-2.25M3 12h18" /></g></svg>
 );
 
+export const RedoIcon = ({ className }: { className?: string }) => (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 9l6 6m0 0-6 6m6-6H9a6 6 0 0 1 0-12h3" />
+    </svg>
+);
+
 export const RestoreIcon = ({ className }: { className?: string }) => (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><IconDefs /><g filter="url(#drop-shadow)"><path fill="url(#glass-gradient)" stroke="rgba(255,255,255,0.3)" strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /><path stroke="url(#accent-gradient)" strokeLinecap="round" strokeLinejoin="round" d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774Z" /><path stroke="url(#accent-gradient)" strokeOpacity="0.5" strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v.01m0 3.49v.01m0 3.49v.01m0 3.49v.01M4.5 12h.01m3.49 0h.01m3.49 0h.01m3.49 0h.01" strokeDasharray="0.1 2" /></g></svg>
 );
@@ -127,6 +134,10 @@ export const SparklesIcon = ({ className }: { className?: string }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path fill="url(#accent-gradient)" stroke="white" strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" /></svg>
 );
 
+export const SpeakerWaveIcon = ({ className }: { className?: string }) => (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><IconDefs /><g filter="url(#drop-shadow)"><path stroke="url(#accent-gradient)" strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.66a9.206 9.206 0 0 0-4.322-2.385A9.71 9.71 0 0 0 12 2.25c-5.32 0-9.714 4.195-9.714 9.4s4.394 9.4 9.714 9.4c1.765 0 3.46-.49 4.9-1.354l-.324-.973c-1.282.52-2.677.817-4.14.817-4.404 0-7.974-3.447-7.974-7.66s3.57-7.66 7.974-7.66c1.077 0 2.115.228 3.064.673a8.81 8.81 0 0 1 3.238 2.05L19.114 5.66Z" /><path fill="url(#glass-gradient)" stroke="rgba(255,255,255,0.3)" strokeLinecap="round" strokeLinejoin="round" d="M15.75 9.75h.007874999999993v.007874999999993H15.75V9.75Zm0 3.75h.007874999999993v.007874999999993H15.75v-.007874999999993Zm0 3.75h.007874999999993v.007874999999993H15.75v-.007874999999993Z" /></g></svg>
+);
+
 export const StopIcon = ({ className }: { className?: string }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><IconDefs /><g filter="url(#drop-shadow)"><rect width="18" height="18" x="3" y="3" rx="2" fill="url(#glass-gradient)" stroke="rgba(255,255,255,0.3)" /><path strokeLinecap="round" strokeLinejoin="round" d="M5.25 7.5A2.25 2.25 0 0 1 7.5 5.25h9a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0 1-2.25 2.25h-9a2.25 2.25 0 0 1-2.25-2.25v-9Z" /></g></svg>
 );
@@ -141,6 +152,12 @@ export const TextScanIcon = ({ className }: { className?: string }) => (
 
 export const TrashIcon = ({ className }: { className?: string }) => (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><IconDefs /><g filter="url(#drop-shadow)"><path stroke="url(#accent-gradient)" strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.067-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></g></svg>
+);
+
+export const UndoIcon = ({ className }: { className?: string }) => (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+    </svg>
 );
 
 export const UpscaleIcon = ({ className }: { className?: string }) => (

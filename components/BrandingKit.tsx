@@ -35,7 +35,6 @@ export const BrandingKit: React.FC<BrandingKitProps> = ({ addImageToGallery, gal
         setBrandImagery([]);
 
         try {
-            // Removed baseUrl as it is not a valid option for GoogleGenAI constructor
             const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
             
             setLoadingMessage('Crafting brand identity...');
@@ -90,7 +89,10 @@ export const BrandingKit: React.FC<BrandingKitProps> = ({ addImageToGallery, gal
                 config: { responseModalities: [Modality.IMAGE] }
             });
             
-            for (const part of imageModelResult.candidates[0].content.parts) {
+            // Fix: Safely access parts using optional chaining and provide a fallback
+            const parts = imageModelResult.candidates?.[0]?.content?.parts || [];
+            
+            for (const part of parts) {
                 if (part.inlineData) {
                     const newLogo: GeneratedImage = {
                         id: new Date().toISOString(),
@@ -107,8 +109,10 @@ export const BrandingKit: React.FC<BrandingKitProps> = ({ addImageToGallery, gal
                 }
             }
 
+            // Define imageryPrompt using parsed brand elements
+            const imageryPrompt = `Generate a set of brand imagery for "${brandName}", a company described as "${brandDescription}". The imagery should reflect the brand's mission statement: "${parsedTextElements.missionStatement}", brand voice keywords: "${parsedTextElements.brandVoice.join(', ')}", and use the color palette: ${parsedTextElements.colorPalette.map(c => c.name + ' ' + c.hex).join(', ')}. Target audience: "${targetAudience || 'general'}" and brand keywords: "${brandKeywords || 'none specified'}" to guide the visual style.`;
+
             setLoadingMessage('Generating brand imagery...');
-            const imageryPrompt = `Generate 4 abstract background images that fit the branding for "${brandName}". The brand's keywords are "${brandKeywords}". The images should be visually consistent, modern, and utilize the color palette: ${parsedTextElements.colorPalette.map(c => c.name).join(', ')}.`;
             const imageryResult = await ai.models.generateImages({
                 model: 'imagen-4.0-generate-001',
                 prompt: imageryPrompt,
@@ -119,7 +123,9 @@ export const BrandingKit: React.FC<BrandingKitProps> = ({ addImageToGallery, gal
                 },
             });
 
-            const newImagery = imageryResult.generatedImages.map(imgData => {
+            const newImagery = imageryResult.generatedImages
+                .filter(imgData => imgData && imgData.image) // Add check here
+                .map(imgData => {
                  const newImage: GeneratedImage = {
                     id: new Date().toISOString() + Math.random(),
                     src: `data:${imgData.image.mimeType};base64,${imgData.image.imageBytes}`,
