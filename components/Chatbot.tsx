@@ -4,9 +4,9 @@ import { ChatMessage, View } from '../types';
 import { ChatBubbleIcon, XMarkIcon, PaperAirplaneIcon, SparklesIcon } from './icons';
 
 const systemInstructions: Record<View, string> = {
-    studio: 'You are zma.ai\'s helpful assistant. You are an expert in branding, design, and AI image generation. Be friendly, concise, and helpful. The user is currently in the Image Studio. Proactively suggest creative prompts, editing ideas, or different AI tools they could try. For example, "Have you tried creating a photorealistic portrait of an astronaut riding a unicorn?" or "You could use the Style Transfer tool to apply a Van Gogh style to your photo!"',
-    branding: 'You are zma.ai\'s helpful assistant. You are an expert in branding, design, and AI image generation. Be friendly, concise, and helpful. The user is in the Branding Kit section. Proactively suggest ideas for brand names, mission statements, or color palettes. Ask them about their business to help them brainstorm. For example, "Tell me about your business, and I can help you come up with a powerful mission statement."',
-    gallery: 'You are zma.ai\'s helpful assistant. You are an expert in branding, design, and AI image generation. Be friendly, concise, and helpful. The user is in their Gallery. Proactively suggest ways to edit their existing creations, like applying filters or using the retouching tools. For example, "I see you have a portrait image. Would you like to try our AI Retouching tool to enhance it?"'
+    studio: 'You are Hasanka.Ai\'s helpful assistant. You are an expert in branding, design, and AI image generation. Be friendly, concise, and helpful. The user is currently in the Image Studio. Proactively suggest creative prompts, editing ideas, or different AI tools they could try. For example, "Have you tried creating a photorealistic portrait of an astronaut riding a unicorn?" or "You could use the Style Transfer tool to apply a Van Gogh style to your photo!"',
+    branding: 'You are Hasanka.Ai\'s helpful assistant. You are an expert in branding, design, and AI image generation. Be friendly, concise, and helpful. The user is in the Branding Kit section. Proactively suggest ideas for brand names, mission statements, or color palettes. Ask them about their business to help them brainstorm. For example, "Tell me about your business, and I can help you come up with a powerful mission statement."',
+    gallery: 'You are Hasanka.Ai\'s helpful assistant. You are an expert in branding, design, and AI image generation. Be friendly, concise, and helpful. The user is in their Gallery. Proactively suggest ways to edit their existing creations, like applying filters or using the retouching tools. For example, "I see you have a portrait image. Would you like to try our AI Retouching tool to enhance it?"'
 };
 
 const welcomeMessages: Record<View, string> = {
@@ -102,7 +102,7 @@ export const Chatbot = ({ currentView }: { currentView: View }) => {
 
             <div className={`fixed bottom-24 right-6 w-[90vw] max-w-md h-[70vh] max-h-[600px] glass-card rounded-3xl flex flex-col z-40 transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}>
                 <div className="p-4 border-b border-[var(--border-primary)] flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-white">zma.ai Assistant</h3>
+                    <h3 className="text-lg font-bold text-white">Hasanka.Ai Assistant</h3>
                     <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white">
                        <XMarkIcon className="h-6 w-6"/>
                     </button>

@@ -1,6 +1,6 @@
 {
-  "name": "Copy of zma.ai",
-  "description": "An AI-powered creative suite to generate and edit images, build complete brand identities, and chat with an intelligent assistant. Upload your photos and leverage Gemini to create logos, branding systems, and more.",
+  "name": "Hasanka.Ai",
+  "description": "Hasanka.Ai - An AI-powered creative suite to generate and edit images, build complete brand identities, and chat with an intelligent assistant. Bulk process photos and leverage Gemini to create logos, branding systems, and more.",
   "requestFramePermissions": [
     "microphone",
     "geolocation",

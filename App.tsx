@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { View, GeneratedImage } from './types';
 import { ImageStudio } from './components/ImageStudio';
@@ -21,7 +20,7 @@ const Header: React.FC<{ activeView: View; setActiveView: (view: View) => void }
                     <div className="flex items-center">
                         <div className="flex-shrink-0 flex items-center gap-3">
                              <LogoIcon className="h-10 w-10" />
-                            <span className="text-2xl font-bold text-white tracking-wider">zma.ai</span>
+                            <span className="text-2xl font-bold text-white tracking-wider">Hasanka.Ai</span>
                         </div>
                     </div>
                     <div className="hidden md:block">
@@ -63,7 +62,7 @@ function App() {
     const [view, setView] = useState<View>('studio');
     const [galleryImages, setGalleryImages] = useState<GeneratedImage[]>(() => {
         try {
-            const localData = localStorage.getItem('zma-ai-gallery');
+            const localData = localStorage.getItem('hasanka-ai-gallery');
             if (!localData) return [];
             // Stored images are missing 'src' and 'originalSrc'. We reconstruct 'src' here.
             // 'originalSrc' is not persisted to save space.
@@ -80,11 +79,11 @@ function App() {
 
     useEffect(() => {
         const saveToLocalStorage = () => {
-            const persistedGalleryJSON = localStorage.getItem('zma-ai-gallery');
+            const persistedGalleryJSON = localStorage.getItem('hasanka-ai-gallery');
     
             if (galleryImages.length === 0) {
                 if (persistedGalleryJSON) {
-                    localStorage.removeItem('zma-ai-gallery');
+                    localStorage.removeItem('hasanka-ai-gallery');
                 }
                 return;
             }
@@ -103,7 +102,7 @@ function App() {
             let imagesToTry = [...savableImages];
             while (imagesToTry.length > 0) {
                 try {
-                    localStorage.setItem('zma-ai-gallery', JSON.stringify(imagesToTry));
+                    localStorage.setItem('hasanka-ai-gallery', JSON.stringify(imagesToTry));
                     
                     if (imagesToTry.length < galleryImages.length) {
                         console.warn(`Removed ${galleryImages.length - imagesToTry.length} oldest images from storage to free up space.`);

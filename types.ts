@@ -1,4 +1,5 @@
 
+
 export type View = 'studio' | 'branding' | 'gallery';
 
 export interface GenerationSettings {
@@ -14,7 +15,7 @@ export interface GeneratedImage {
   base64: string;
   mimeType: string;
   prompt: string;
-  type: 'generate' | 'edit' | 'logo' | 'filter' | 'face-swap' | 'retouch' | 'restore' | 'variation' | 'background-removal' | 'passport-photo' | 'enhance' | 'brand-asset' ;
+  type: 'generate' | 'edit' | 'logo' | 'filter' | 'face-swap' | 'retouch' | 'restore' | 'variation' | 'enhance' | 'brand-asset' | 'passport-photo';
   createdAt: string;
   parentId?: string; // Link to the original image for variations
   settings?: GenerationSettings;
